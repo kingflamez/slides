@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: 'https://stormy-mesa-05417.herokuapp.com/graphql',
+  uri: 'https://wild-slides.herokuapp.com/graphql',
   cache: new InMemoryCache()
 });
 
