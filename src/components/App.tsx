@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery } from "@apollo/client";
+import gsap from "gsap";
+import Draggable from "gsap/Draggable";
 
 import arrow from "../images/arrow.svg";
-import gsap from "gsap";
 import SLIDERS_QUERY from "../apollo/queries/sliders_query";
 
 import "./App.scss";
-import Draggable from "gsap/Draggable";
 
 gsap.registerPlugin(Draggable);
 
@@ -25,6 +25,7 @@ function App() {
   const [index, setIndex] = useState(0);
   const { loading, data } = useQuery(SLIDERS_QUERY);
 
+  // holds the images for the slider
   const imageElements =
     !loading &&
     data.sliders.map((img: imagesInterface) => (
@@ -36,6 +37,7 @@ function App() {
       />
     ));
 
+  // holds the indicators
   const indicators =
     !loading &&
     data.sliders.map((img: imagesInterface, i: number) => (
@@ -45,21 +47,22 @@ function App() {
       />
     ));
 
+    // goes to the next image
   const nextImage = useCallback(() => {
     const slidersLength = loading ? 0 : data.sliders.length;
     if (index < slidersLength - 1) {
-      setIndex((i) => {
-        return i + 1;
-      });
+      setIndex((i) => i + 1);
     }
   }, [data, index, loading]);
 
+  // goes to the previous image
   const previousImage = useCallback(() => {
     if (index > 0) {
       setIndex((i) => i - 1);
     }
   }, [index]);
 
+  // enables the slode show
   useEffect(() => {
     if (slidesRef.current) {
       const slideWidth: number = slidesRef.current.clientWidth;
@@ -70,6 +73,7 @@ function App() {
     }
   }, [index]);
 
+  // enable the draggable 
   useEffect(() => {
     if (!loading && data) {
       new Draggable(".slider", {
@@ -83,6 +87,7 @@ function App() {
           if (this.getDirection() === "right" && index > 0) previousImage();
           else this.endDrag();
 
+          // stop the slider from shifting
           const slider = document.getElementsByClassName("slider").item(0);
           slider?.setAttribute("style", ``);
         },

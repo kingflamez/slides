@@ -52,7 +52,7 @@ $max-width: 590px;
     right: 0;
     &__arrow {
       height: 7px;
-      padding: 20px;
+      padding: 36px 28px;
       transition: opacity 0.4s ease-in-out;
       &.previous {
         transform: scaleX(-1);
