@@ -74,6 +74,7 @@ $max-width: 590px;
     &__image {
       width: 100vw;
       max-width: $max-width;
+      object-fit: cover;
     }
   }
 }
